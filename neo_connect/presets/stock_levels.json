@@ -1,0 +1,24 @@
+{
+  "_platform": "Any",
+  "endpoint_title": "Stock Levels",
+  "slug": "stock-levels",
+  "direction": "Outbound",
+  "enabled": 1,
+  "reference_doctype": "Bin",
+  "description": "Available quantity per SKU (actual - reserved) for the configured warehouses. Use modified_since for incremental sync.",
+  "outbound_source": "Server Method",
+  "server_method": "neo_connect.handlers.commerce.stock_levels",
+  "order_by": "modified asc",
+  "default_page_length": 200,
+  "max_page_length": 1000,
+  "handler_settings": {
+    "warehouses": [
+      "Stores - YC"
+    ],
+    "subtract_reserved": 1,
+    "per_warehouse": 0,
+    "sku_key": "sku",
+    "qty_key": "qty"
+  },
+  "field_maps": []
+}

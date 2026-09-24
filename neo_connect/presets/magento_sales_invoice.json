@@ -1,0 +1,198 @@
+{
+  "_platform": "Magento 2",
+  "endpoint_title": "Magento - Sales Invoice",
+  "slug": "magento-sales-invoice",
+  "direction": "Inbound",
+  "enabled": 1,
+  "reference_doctype": "Sales Invoice",
+  "description": "Magento pushes the sales order (Magento REST 'order' entity) when it is invoiced. ERPNext creates and submits a Sales Invoice, the customer if new, and a Payment Entry if paid.",
+  "records_path": "",
+  "external_id_path": "increment_id",
+  "on_duplicate": "Skip",
+  "max_records_per_request": 50,
+  "document_action": "Submit",
+  "process_async": 0,
+  "ignore_permissions": 0,
+  "defaults": {
+    "set_posting_time": 1,
+    "update_stock": 0,
+    "disable_rounded_total": 1,
+    "taxes_and_charges": "KSA VAT 15% - YC"
+  },
+  "row_filters": {
+    "items[]": "not row.get('parent_item_id')"
+  },
+  "pre_process_hook": "neo_connect.handlers.commerce.ensure_customer\nneo_connect.handlers.commerce.apply_charges",
+  "post_process_hook": "neo_connect.handlers.commerce.check_grand_total\nneo_connect.handlers.commerce.create_payment",
+  "handler_settings": {
+    "customer_email_path": "customer_email",
+    "customer_name_paths": [
+      "customer_firstname",
+      "customer_lastname"
+    ],
+    "customer_phone_path": "billing_address.telephone",
+    "billing_address_path": "billing_address",
+    "customer_group": "Individual",
+    "territory": "All Territories",
+    "guest_customer": "",
+    "shipping_amount_path": "shipping_amount",
+    "shipping_item": "SHIPPING",
+    "discount_amount_path": "discount_amount",
+    "discount_on": "Net Total",
+    "grand_total_path": "grand_total",
+    "total_tolerance": 0.05,
+    "reject_on_total_mismatch": 0,
+    "create_payment": 1,
+    "payment_method_path": "payment.method",
+    "paid_amount_path": "payment.amount_paid",
+    "payment_reference_path": "increment_id",
+    "mode_of_payment_map": {
+      "checkmo": "Cash",
+      "banktransfer": "Wire Transfer",
+      "cashondelivery": "Cash",
+      "*": "Credit Card"
+    }
+  },
+  "field_maps": [
+    {
+      "external_path": "increment_id",
+      "erp_field": "po_no",
+      "transform": "Text",
+      "required": 1,
+      "notes": "Magento order number (unique)"
+    },
+    {
+      "external_path": "created_at",
+      "erp_field": "posting_date",
+      "transform": "Date",
+      "required": 1,
+      "notes": "Magento created_at (UTC); converted to local time",
+      "source_timezone": "UTC"
+    },
+    {
+      "external_path": "created_at",
+      "erp_field": "posting_time",
+      "transform": "Time",
+      "source_timezone": "UTC"
+    },
+    {
+      "external_path": "created_at",
+      "erp_field": "po_date",
+      "transform": "Date",
+      "source_timezone": "UTC"
+    },
+    {
+      "external_path": "created_at",
+      "erp_field": "due_date",
+      "transform": "Date",
+      "source_timezone": "UTC"
+    },
+    {
+      "external_path": "order_currency_code",
+      "erp_field": "currency",
+      "transform": "Upper",
+      "notes": "ISO currency, e.g. SAR"
+    },
+    {
+      "external_path": "",
+      "erp_field": "remarks",
+      "transform": "Expression",
+      "expression": "'Magento order ' + cstr(record.get('increment_id')) + ' / ' + cstr(record.get('customer_email'))"
+    },
+    {
+      "external_path": "items[].sku",
+      "erp_field": "items.item_code",
+      "transform": "Lookup",
+      "required": 1,
+      "lookup_doctype": "Item",
+      "lookup_field": "item_code",
+      "if_not_found": "Error",
+      "notes": "Must equal the ERPNext Item Code"
+    },
+    {
+      "external_path": "items[].qty_ordered",
+      "erp_field": "items.qty",
+      "transform": "Float",
+      "required": 1
+    },
+    {
+      "external_path": "items[].price",
+      "erp_field": "items.rate",
+      "transform": "Float",
+      "required": 1,
+      "notes": "Unit price excluding VAT"
+    },
+    {
+      "external_path": "customer_email",
+      "erp_field": "contact_email",
+      "transform": "Lower",
+      "notes": "Customer e-mail; customer is created if new"
+    }
+  ],
+  "sample_payload": {
+    "entity_id": 1045,
+    "increment_id": "000001045",
+    "state": "processing",
+    "status": "processing",
+    "created_at": "2026-09-24 07:12:05",
+    "order_currency_code": "SAR",
+    "customer_email": "sara.ahmed@example.com",
+    "customer_firstname": "Sara",
+    "customer_lastname": "Ahmed",
+    "customer_is_guest": 0,
+    "subtotal": 380,
+    "shipping_amount": 25,
+    "discount_amount": -20,
+    "tax_amount": 57.75,
+    "grand_total": 442.75,
+    "billing_address": {
+      "firstname": "Sara",
+      "lastname": "Ahmed",
+      "street": [
+        "King Fahd Road 123",
+        "Al Olaya"
+      ],
+      "city": "Riyadh",
+      "region": "Riyadh",
+      "postcode": "12211",
+      "country_id": "SA",
+      "telephone": "+966500000000",
+      "email": "sara.ahmed@example.com"
+    },
+    "payment": {
+      "method": "checkmo",
+      "amount_paid": 442.75
+    },
+    "items": [
+      {
+        "item_id": 11,
+        "sku": "SKU-001",
+        "name": "Coffee Mug",
+        "product_type": "simple",
+        "qty_ordered": 2,
+        "price": 150,
+        "price_incl_tax": 172.5,
+        "parent_item_id": null
+      },
+      {
+        "item_id": 12,
+        "sku": "TSHIRT-RED-M",
+        "name": "T-Shirt",
+        "product_type": "configurable",
+        "qty_ordered": 1,
+        "price": 80,
+        "price_incl_tax": 92,
+        "parent_item_id": null
+      },
+      {
+        "item_id": 13,
+        "sku": "TSHIRT-RED-M",
+        "name": "T-Shirt Red M",
+        "product_type": "simple",
+        "qty_ordered": 1,
+        "price": 0,
+        "parent_item_id": 12
+      }
+    ]
+  }
+}
