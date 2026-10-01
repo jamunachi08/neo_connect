@@ -1,0 +1,183 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-09-24 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "partner_name",
+  "platform",
+  "cb_1",
+  "enabled",
+  "contact_email",
+  "sb_credentials",
+  "user",
+  "api_key",
+  "roles",
+  "cb_2",
+  "require_signature",
+  "signing_secret",
+  "sb_security",
+  "allowed_ips",
+  "cb_3",
+  "rate_limit_per_minute",
+  "sb_defaults",
+  "company",
+  "defaults",
+  "handler_settings"
+ ],
+ "fields": [
+  {
+   "fieldname": "partner_name",
+   "fieldtype": "Data",
+   "label": "Partner Name",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1,
+   "description": "e.g. Magento Store KSA"
+  },
+  {
+   "fieldname": "platform",
+   "fieldtype": "Select",
+   "label": "Platform",
+   "options": "Magento\nShopify\nWooCommerce\nSalla\nZid\nBigCommerce\nOpenCart\nPrestaShop\nCustom\nOther",
+   "default": "Custom",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled",
+   "default": "1",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "contact_email",
+   "fieldtype": "Data",
+   "label": "Technical Contact Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "sb_credentials",
+   "fieldtype": "Section Break",
+   "label": "Credentials"
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "API User",
+   "options": "User",
+   "read_only": 1,
+   "description": "Created by <b>Generate Credentials</b>. Requests authenticated with this user's key/secret are attributed to this partner."
+  },
+  {
+   "fieldname": "api_key",
+   "fieldtype": "Data",
+   "label": "API Key",
+   "read_only": 1
+  },
+  {
+   "fieldname": "roles",
+   "fieldtype": "Small Text",
+   "label": "Roles for API User",
+   "default": "Accounts User\nSales User\nStock User",
+   "description": "One role per line. Keep this minimal."
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "require_signature",
+   "fieldtype": "Check",
+   "label": "Require HMAC Signature",
+   "description": "Partner must send header <code>X-Signature</code> = hex HMAC-SHA256 of the raw body."
+  },
+  {
+   "fieldname": "signing_secret",
+   "fieldtype": "Password",
+   "label": "Signing Secret",
+   "depends_on": "require_signature"
+  },
+  {
+   "fieldname": "sb_security",
+   "fieldtype": "Section Break",
+   "label": "Network & Limits"
+  },
+  {
+   "fieldname": "allowed_ips",
+   "fieldtype": "Small Text",
+   "label": "Allowed IPs / CIDR",
+   "description": "One per line, e.g. 203.0.113.10 or 203.0.113.0/24. Empty = any IP."
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "rate_limit_per_minute",
+   "fieldtype": "Int",
+   "label": "Rate Limit (requests / minute)",
+   "default": "120",
+   "description": "0 = unlimited"
+  },
+  {
+   "fieldname": "sb_defaults",
+   "fieldtype": "Section Break",
+   "label": "Defaults for all endpoints of this partner"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "defaults",
+   "fieldtype": "Code",
+   "label": "Document Defaults (JSON)",
+   "options": "JSON",
+   "description": "Applied when the mapped document has no value. e.g. {\"currency\": \"SAR\", \"items.warehouse\": \"Stores - YC\"}"
+  },
+  {
+   "fieldname": "handler_settings",
+   "fieldtype": "Code",
+   "label": "Handler Settings (JSON)",
+   "options": "JSON",
+   "description": "Settings read by hooks (see README). Endpoint settings override these."
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-09-24 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Neo Connect",
+ "name": "API Partner",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "field:partner_name",
+ "title_field": "partner_name",
+ "track_changes": 1,
+ "naming_rule": "By fieldname"
+}

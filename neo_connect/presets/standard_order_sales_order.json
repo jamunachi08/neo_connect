@@ -1,0 +1,166 @@
+{
+  "records_path": "",
+  "external_id_path": "order_id",
+  "on_duplicate": "Skip",
+  "max_records_per_request": 100,
+  "process_async": 0,
+  "ignore_permissions": 0,
+  "pre_process_hook": "neo_connect.handlers.commerce.ensure_customer\nneo_connect.handlers.commerce.apply_charges",
+  "handler_settings": {
+    "customer_email_path": "customer.email",
+    "customer_name_paths": [
+      "customer.first_name",
+      "customer.last_name"
+    ],
+    "customer_phone_path": "customer.phone",
+    "billing_address_path": "customer.address",
+    "address_map": {
+      "line1": "line1",
+      "line2": "line2",
+      "city": "city",
+      "state": "state",
+      "pincode": "postcode",
+      "country_code": "country_code"
+    },
+    "customer_group": "Individual",
+    "territory": "All Territories",
+    "guest_customer": "",
+    "shipping_amount_path": "shipping_amount",
+    "shipping_item": "SHIPPING",
+    "discount_amount_path": "discount_amount",
+    "discount_on": "Net Total",
+    "grand_total_path": "grand_total",
+    "total_tolerance": 0.05,
+    "create_payment": 1,
+    "payment_method_path": "payment.method",
+    "paid_amount_path": "payment.paid_amount",
+    "payment_reference_path": "payment.reference",
+    "mode_of_payment_map": {
+      "cash": "Cash",
+      "cod": "Cash",
+      "bank": "Wire Transfer",
+      "card": "Credit Card",
+      "*": "Credit Card"
+    }
+  },
+  "sample_payload": {
+    "order_id": "WEB-10045",
+    "order_date": "2026-09-24T10:12:05+03:00",
+    "currency": "SAR",
+    "customer": {
+      "email": "sara.ahmed@example.com",
+      "first_name": "Sara",
+      "last_name": "Ahmed",
+      "phone": "+966500000000",
+      "address": {
+        "line1": "King Fahd Road 123",
+        "line2": "Al Olaya",
+        "city": "Riyadh",
+        "state": "Riyadh",
+        "postcode": "12211",
+        "country_code": "SA"
+      }
+    },
+    "lines": [
+      {
+        "sku": "SKU-001",
+        "qty": 2,
+        "unit_price": 150,
+        "description": "Coffee Mug"
+      },
+      {
+        "sku": "TSHIRT-RED-M",
+        "qty": 1,
+        "unit_price": 80
+      }
+    ],
+    "shipping_amount": 25,
+    "discount_amount": 20,
+    "grand_total": 442.75,
+    "payment": {
+      "method": "card",
+      "paid_amount": 442.75,
+      "reference": "ch_3PabcXYZ"
+    }
+  },
+  "_platform": "Any (Standard Commerce Order schema)",
+  "endpoint_title": "Standard Order - Sales Order",
+  "slug": "orders-sales-order",
+  "direction": "Inbound",
+  "enabled": 1,
+  "reference_doctype": "Sales Order",
+  "description": "Same Standard Commerce Order JSON, creating a Sales Order (for delivery/fulfilment in ERPNext).",
+  "document_action": "Submit",
+  "defaults": {
+    "disable_rounded_total": 1,
+    "taxes_and_charges": "KSA VAT 15% - YC",
+    "items.warehouse": "Stores - YC"
+  },
+  "post_process_hook": "neo_connect.handlers.commerce.check_grand_total",
+  "field_maps": [
+    {
+      "external_path": "order_id",
+      "erp_field": "po_no",
+      "transform": "Text",
+      "required": 1,
+      "notes": "Your unique order number"
+    },
+    {
+      "external_path": "currency",
+      "erp_field": "currency",
+      "transform": "Upper",
+      "notes": "ISO 4217, e.g. SAR"
+    },
+    {
+      "external_path": "customer.email",
+      "erp_field": "contact_email",
+      "transform": "Lower",
+      "notes": "Used to find or create the customer"
+    },
+    {
+      "external_path": "lines[].sku",
+      "erp_field": "items.item_code",
+      "transform": "Lookup",
+      "required": 1,
+      "lookup_doctype": "Item",
+      "lookup_field": "item_code",
+      "if_not_found": "Error",
+      "notes": "ERPNext Item Code"
+    },
+    {
+      "external_path": "lines[].qty",
+      "erp_field": "items.qty",
+      "transform": "Float",
+      "required": 1
+    },
+    {
+      "external_path": "lines[].unit_price",
+      "erp_field": "items.rate",
+      "transform": "Float",
+      "required": 1,
+      "notes": "Unit price excluding VAT"
+    },
+    {
+      "external_path": "lines[].description",
+      "erp_field": "items.description",
+      "transform": "Text"
+    },
+    {
+      "external_path": "order_date",
+      "erp_field": "transaction_date",
+      "transform": "Date",
+      "required": 1,
+      "notes": "ISO 8601 date-time"
+    },
+    {
+      "external_path": "order_date",
+      "erp_field": "delivery_date",
+      "transform": "Date"
+    },
+    {
+      "external_path": "order_date",
+      "erp_field": "items.delivery_date",
+      "transform": "Date"
+    }
+  ]
+}
