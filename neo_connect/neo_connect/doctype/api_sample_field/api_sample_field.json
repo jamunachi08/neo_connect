@@ -1,0 +1,178 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-05 14:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "include",
+  "role",
+  "external_path",
+  "sample_value",
+  "erp_field",
+  "transform",
+  "create_field",
+  "cb1",
+  "data_type",
+  "presence",
+  "confidence",
+  "required",
+  "note",
+  "sb_adv",
+  "lookup_doctype",
+  "lookup_field",
+  "if_not_found",
+  "source_timezone",
+  "cb2",
+  "value_map",
+  "expression"
+ ],
+ "fields": [
+  {
+   "fieldname": "include",
+   "fieldtype": "Check",
+   "label": "Use",
+   "default": "1",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "role",
+   "fieldtype": "Select",
+   "label": "Role",
+   "options": "Field\nExternal ID\nCustomer\nAddress\nShipping\nDiscount\nGrand Total\nPayment\nCost Center\nUnmapped\nIgnore",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "external_path",
+   "fieldtype": "Data",
+   "label": "Partner JSON Path",
+   "in_list_view": 1,
+   "columns": 2,
+   "read_only": 1
+  },
+  {
+   "fieldname": "sample_value",
+   "fieldtype": "Data",
+   "label": "Sample",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "erp_field",
+   "fieldtype": "Data",
+   "label": "ERPNext Field",
+   "in_list_view": 1,
+   "columns": 2,
+   "description": "parent field (e.g. po_no) or items.<field>; leave empty for roles handled by handlers"
+  },
+  {
+   "fieldname": "transform",
+   "fieldtype": "Select",
+   "label": "Transform",
+   "options": "None\nStatic\nText\nUpper\nLower\nInteger\nFloat\nAbsolute\nCheck\nDate\nDatetime\nTime\nRemove Company Abbr\nValue Map\nLookup\nExpression",
+   "default": "None",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "create_field",
+   "fieldtype": "Check",
+   "label": "Create Field",
+   "in_list_view": 1,
+   "columns": 1,
+   "description": "Create a custom field for this value on Generate (on the item row for items[] paths)"
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "data_type",
+   "fieldtype": "Data",
+   "label": "Detected Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "presence",
+   "fieldtype": "Data",
+   "label": "In Samples",
+   "read_only": 1
+  },
+  {
+   "fieldname": "confidence",
+   "fieldtype": "Int",
+   "label": "Match %",
+   "read_only": 1
+  },
+  {
+   "fieldname": "required",
+   "fieldtype": "Check",
+   "label": "Required"
+  },
+  {
+   "fieldname": "note",
+   "fieldtype": "Small Text",
+   "label": "Note",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_adv",
+   "fieldtype": "Section Break",
+   "label": "Lookup / Value Map",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "lookup_doctype",
+   "fieldtype": "Link",
+   "label": "Lookup DocType",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "lookup_field",
+   "fieldtype": "Data",
+   "label": "Lookup Field"
+  },
+  {
+   "fieldname": "if_not_found",
+   "fieldtype": "Select",
+   "label": "If Not Found",
+   "options": "Error\nUse Value\nSkip",
+   "default": "Error"
+  },
+  {
+   "fieldname": "source_timezone",
+   "fieldtype": "Data",
+   "label": "Source Time Zone"
+  },
+  {
+   "fieldname": "cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "value_map",
+   "fieldtype": "Code",
+   "label": "Value Map (JSON)",
+   "options": "JSON"
+  },
+  {
+   "fieldname": "expression",
+   "fieldtype": "Small Text",
+   "label": "Expression"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-05 14:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Neo Connect",
+ "name": "API Sample Field",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1
+}
