@@ -1,0 +1,166 @@
+{
+  "_platform": "Magento (custom JSON from your Magento developer)",
+  "endpoint_title": "Magento - Sales Invoice (custom JSON)",
+  "slug": "magento-invoice",
+  "direction": "Inbound",
+  "enabled": 1,
+  "reference_doctype": "Sales Invoice",
+  "description": "Magento pushes one invoice per call in the agreed custom JSON (magento_order_id, customer, items[], discount, shipping, totals). ERPNext creates and submits a Sales Invoice, creates the customer if new, and records payment only when payment_status is 'paid'. The cost center comes from the 'cost_center' field: used if it exists, created under the company's root cost center if not.",
+  "records_path": "",
+  "external_id_path": "magento_order_id",
+  "on_duplicate": "Skip",
+  "max_records_per_request": 50,
+  "document_action": "Submit",
+  "process_async": 0,
+  "ignore_permissions": 0,
+  "defaults": {
+    "set_posting_time": 1,
+    "update_stock": 0,
+    "disable_rounded_total": 1,
+    "taxes_and_charges": "KSA VAT 15% - YC"
+  },
+  "pre_process_hook": "neo_connect.handlers.commerce.ensure_customer\nneo_connect.handlers.commerce.apply_charges\nneo_connect.handlers.commerce.ensure_cost_center",
+  "post_process_hook": "neo_connect.handlers.commerce.check_grand_total\nneo_connect.handlers.commerce.create_payment",
+  "handler_settings": {
+    "customer_email_path": "customer.email",
+    "customer_name_paths": [
+      "customer.name"
+    ],
+    "customer_phone_path": "customer.mobile",
+    "billing_address_path": "billing_address",
+    "address_map": {
+      "line1": "address",
+      "city": "city",
+      "country": "country"
+    },
+    "customer_group": "Individual",
+    "territory": "All Territories",
+    "guest_customer": "",
+    "shipping_amount_path": "shipping_amount",
+    "shipping_item": "SHIPPING",
+    "discount_amount_path": "discount_amount",
+    "discount_on": "Net Total",
+    "grand_total_path": "grand_total",
+    "total_tolerance": 0.05,
+    "reject_on_total_mismatch": 0,
+    "create_payment": 1,
+    "paid_when_path": "payment_status",
+    "paid_when_values": [
+      "paid"
+    ],
+    "payment_method_path": "payment_method",
+    "payment_reference_path": "magento_order_id",
+    "mode_of_payment_map": {
+      "Cash on Delivery": "Cash",
+      "Credit Card": "Credit Card",
+      "Mada": "Credit Card",
+      "Apple Pay": "Credit Card",
+      "Bank Transfer": "Wire Transfer",
+      "*": "Credit Card"
+    },
+    "cost_center_path": "cost_center",
+    "item_cost_center_path": "cost_center",
+    "cost_center_default": "",
+    "cost_center_parent": "",
+    "create_cost_center": 1
+  },
+  "field_maps": [
+    {
+      "external_path": "magento_order_id",
+      "erp_field": "po_no",
+      "transform": "Text",
+      "required": 1,
+      "notes": "Magento order number (unique, never reused)"
+    },
+    {
+      "external_path": "order_date",
+      "erp_field": "posting_date",
+      "transform": "Date",
+      "required": 1,
+      "notes": "YYYY-MM-DD (local Riyadh date)"
+    },
+    {
+      "external_path": "order_date",
+      "erp_field": "po_date",
+      "transform": "Date"
+    },
+    {
+      "external_path": "order_date",
+      "erp_field": "due_date",
+      "transform": "Date"
+    },
+    {
+      "external_path": "customer.email",
+      "erp_field": "contact_email",
+      "transform": "Lower",
+      "notes": "Used to find or create the customer"
+    },
+    {
+      "external_path": "",
+      "erp_field": "remarks",
+      "transform": "Expression",
+      "expression": "'Magento order ' + cstr(record.get('magento_order_id')) + ' / ' + cstr(record.get('payment_method'))"
+    },
+    {
+      "external_path": "items[].item_code",
+      "erp_field": "items.item_code",
+      "transform": "Lookup",
+      "required": 1,
+      "lookup_doctype": "Item",
+      "lookup_field": "item_code",
+      "if_not_found": "Error",
+      "notes": "Must equal the ERPNext Item Code"
+    },
+    {
+      "external_path": "items[].qty",
+      "erp_field": "items.qty",
+      "transform": "Float",
+      "required": 1
+    },
+    {
+      "external_path": "items[].rate",
+      "erp_field": "items.rate",
+      "transform": "Float",
+      "required": 1,
+      "notes": "Unit price EXCLUDING VAT"
+    }
+  ],
+  "sample_payload": {
+    "magento_order_id": "100012345",
+    "order_date": "2026-09-24",
+    "cost_center": "E-Commerce",
+    "customer": {
+      "name": "John Smith",
+      "email": "john@example.com",
+      "mobile": "+966500000000"
+    },
+    "billing_address": {
+      "address": "Riyadh",
+      "city": "Riyadh",
+      "country": "Saudi Arabia"
+    },
+    "shipping_address": {
+      "address": "Riyadh",
+      "city": "Riyadh",
+      "country": "Saudi Arabia"
+    },
+    "items": [
+      {
+        "item_code": "TYRE-001",
+        "qty": 2,
+        "rate": 450
+      },
+      {
+        "item_code": "TYRE-002",
+        "qty": 1,
+        "rate": 650
+      }
+    ],
+    "discount_amount": 50,
+    "shipping_amount": 25,
+    "tax_amount": 228.75,
+    "grand_total": 1753.75,
+    "payment_method": "Cash on Delivery",
+    "payment_status": "pending"
+  }
+}

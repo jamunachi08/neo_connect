@@ -1,0 +1,63 @@
+{
+  "_platform": "Any",
+  "endpoint_title": "Invoice Status",
+  "slug": "invoice-status",
+  "direction": "Outbound",
+  "enabled": 1,
+  "reference_doctype": "Sales Invoice",
+  "description": "Look up the ERPNext invoice for a shop order: ?po_no=000001045",
+  "outbound_source": "DocType Query",
+  "base_filters": [
+    [
+      "docstatus",
+      "<",
+      2
+    ]
+  ],
+  "allowed_filters": "po_no\nname\nstatus",
+  "order_by": "modified asc",
+  "default_page_length": 50,
+  "max_page_length": 200,
+  "field_maps": [
+    {
+      "external_path": "order_id",
+      "erp_field": "po_no",
+      "transform": "None"
+    },
+    {
+      "external_path": "invoice_no",
+      "erp_field": "name",
+      "transform": "None"
+    },
+    {
+      "external_path": "status",
+      "erp_field": "status",
+      "transform": "None"
+    },
+    {
+      "external_path": "invoice_date",
+      "erp_field": "posting_date",
+      "transform": "Date"
+    },
+    {
+      "external_path": "currency",
+      "erp_field": "currency",
+      "transform": "None"
+    },
+    {
+      "external_path": "grand_total",
+      "erp_field": "grand_total",
+      "transform": "Float"
+    },
+    {
+      "external_path": "outstanding",
+      "erp_field": "outstanding_amount",
+      "transform": "Float"
+    },
+    {
+      "external_path": "updated_at",
+      "erp_field": "modified",
+      "transform": "Datetime"
+    }
+  ]
+}

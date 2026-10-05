@@ -1,0 +1,60 @@
+{
+  "_platform": "Any",
+  "endpoint_title": "Item Prices",
+  "slug": "item-prices",
+  "direction": "Outbound",
+  "enabled": 1,
+  "reference_doctype": "Item Price",
+  "description": "Selling prices by price list. Ignore Permissions is on because the standard Sales/Stock User roles cannot read Item Price; the response is limited to the mapped fields and allowed filters.",
+  "outbound_source": "DocType Query",
+  "ignore_permissions": 1,
+  "base_filters": [
+    [
+      "selling",
+      "=",
+      1
+    ]
+  ],
+  "allowed_filters": "price_list\nitem_code\ncurrency",
+  "order_by": "modified asc",
+  "default_page_length": 100,
+  "max_page_length": 1000,
+  "field_maps": [
+    {
+      "external_path": "sku",
+      "erp_field": "item_code",
+      "transform": "None",
+      "notes": "Item Code"
+    },
+    {
+      "external_path": "price",
+      "erp_field": "price_list_rate",
+      "transform": "Float"
+    },
+    {
+      "external_path": "currency",
+      "erp_field": "currency",
+      "transform": "None"
+    },
+    {
+      "external_path": "price_list",
+      "erp_field": "price_list",
+      "transform": "None"
+    },
+    {
+      "external_path": "valid_from",
+      "erp_field": "valid_from",
+      "transform": "Date"
+    },
+    {
+      "external_path": "valid_upto",
+      "erp_field": "valid_upto",
+      "transform": "Date"
+    },
+    {
+      "external_path": "updated_at",
+      "erp_field": "modified",
+      "transform": "Datetime"
+    }
+  ]
+}
