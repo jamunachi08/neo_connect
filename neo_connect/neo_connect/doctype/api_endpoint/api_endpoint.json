@@ -1,0 +1,338 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-09-24 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "endpoint_title",
+  "slug",
+  "direction",
+  "cb_1",
+  "enabled",
+  "reference_doctype",
+  "endpoint_url",
+  "sb_partners",
+  "allowed_partners",
+  "description",
+  "sb_inbound",
+  "records_path",
+  "external_id_path",
+  "on_duplicate",
+  "max_records_per_request",
+  "cb_2",
+  "document_action",
+  "process_async",
+  "ignore_permissions",
+  "sb_inbound_adv",
+  "defaults",
+  "row_filters",
+  "cb_3",
+  "pre_process_hook",
+  "post_process_hook",
+  "sb_outbound",
+  "outbound_source",
+  "server_method",
+  "base_filters",
+  "allowed_filters",
+  "cb_4",
+  "order_by",
+  "default_page_length",
+  "max_page_length",
+  "sb_handler",
+  "handler_settings",
+  "sb_mapping",
+  "field_maps",
+  "sb_test",
+  "sample_payload"
+ ],
+ "fields": [
+  {
+   "fieldname": "endpoint_title",
+   "fieldtype": "Data",
+   "label": "Title",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "slug",
+   "fieldtype": "Data",
+   "label": "Endpoint Code",
+   "reqd": 1,
+   "unique": 1,
+   "set_only_once": 1,
+   "description": "URL code shared with the partner, e.g. magento-sales-invoice (lowercase, digits, -)"
+  },
+  {
+   "fieldname": "direction",
+   "fieldtype": "Select",
+   "label": "Direction",
+   "options": "Inbound\nOutbound",
+   "default": "Inbound",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "description": "Inbound: partner pushes data into ERPNext. Outbound: partner reads data from ERPNext."
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled",
+   "default": "1",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "reference_doctype",
+   "fieldtype": "Link",
+   "label": "ERPNext DocType",
+   "options": "DocType",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "mandatory_depends_on": "eval:doc.direction=='Inbound' || doc.outbound_source=='DocType Query'"
+  },
+  {
+   "fieldname": "endpoint_url",
+   "fieldtype": "Data",
+   "label": "Endpoint URL",
+   "read_only": 1,
+   "is_virtual": 1,
+   "options": "URL"
+  },
+  {
+   "fieldname": "sb_partners",
+   "fieldtype": "Section Break",
+   "label": "Who can use it"
+  },
+  {
+   "fieldname": "allowed_partners",
+   "fieldtype": "Table MultiSelect",
+   "label": "Allowed Partners",
+   "options": "API Endpoint Partner"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "sb_inbound",
+   "fieldtype": "Section Break",
+   "label": "Inbound Settings",
+   "depends_on": "eval:doc.direction=='Inbound'"
+  },
+  {
+   "fieldname": "records_path",
+   "fieldtype": "Data",
+   "label": "Records Path",
+   "description": "Where the record(s) are in the body. Empty = body is one record or a list. e.g. <code>orders</code> for {\"orders\": [...]}"
+  },
+  {
+   "fieldname": "external_id_path",
+   "fieldtype": "Data",
+   "label": "External ID Path",
+   "mandatory_depends_on": "eval:doc.direction=='Inbound'",
+   "description": "Unique id of the record in the partner system (idempotency key), e.g. increment_id"
+  },
+  {
+   "fieldname": "on_duplicate",
+   "fieldtype": "Select",
+   "label": "On Duplicate",
+   "options": "Skip\nUpdate Draft\nError",
+   "default": "Skip"
+  },
+  {
+   "fieldname": "max_records_per_request",
+   "fieldtype": "Int",
+   "label": "Max Records / Request",
+   "default": "100"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "document_action",
+   "fieldtype": "Select",
+   "label": "Document Action",
+   "options": "Save as Draft\nSubmit",
+   "default": "Save as Draft"
+  },
+  {
+   "fieldname": "process_async",
+   "fieldtype": "Check",
+   "label": "Process in Background",
+   "description": "Respond 202 immediately and process in a background job (use for large batches)."
+  },
+  {
+   "fieldname": "ignore_permissions",
+   "fieldtype": "Check",
+   "label": "Ignore Permissions",
+   "description": "Run as Administrator. Leave unchecked to enforce the API user's roles."
+  },
+  {
+   "fieldname": "sb_inbound_adv",
+   "fieldtype": "Section Break",
+   "label": "Defaults, Filters & Hooks",
+   "depends_on": "eval:doc.direction=='Inbound'",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "defaults",
+   "fieldtype": "Code",
+   "label": "Document Defaults (JSON)",
+   "options": "JSON",
+   "description": "Used when the mapping gives no value. Child fields as \"items.warehouse\"."
+  },
+  {
+   "fieldname": "row_filters",
+   "fieldtype": "Code",
+   "label": "Row Filters (JSON)",
+   "options": "JSON",
+   "description": "Keep only child rows where the expression is true, e.g. {\"items[]\": \"not row.get('parent_item_id')\"}"
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "pre_process_hook",
+   "fieldtype": "Small Text",
+   "label": "Pre-process Hooks",
+   "description": "Dotted python paths, one per line, called with ctx before insert. e.g. neo_connect.handlers.commerce.ensure_customer"
+  },
+  {
+   "fieldname": "post_process_hook",
+   "fieldtype": "Small Text",
+   "label": "Post-process Hooks",
+   "description": "Called after insert/submit, e.g. neo_connect.handlers.commerce.create_payment"
+  },
+  {
+   "fieldname": "sb_outbound",
+   "fieldtype": "Section Break",
+   "label": "Outbound Settings",
+   "depends_on": "eval:doc.direction=='Outbound'"
+  },
+  {
+   "fieldname": "outbound_source",
+   "fieldtype": "Select",
+   "label": "Source",
+   "options": "DocType Query\nServer Method",
+   "default": "DocType Query"
+  },
+  {
+   "fieldname": "server_method",
+   "fieldtype": "Data",
+   "label": "Server Method",
+   "depends_on": "eval:doc.outbound_source=='Server Method'",
+   "mandatory_depends_on": "eval:doc.direction=='Outbound' && doc.outbound_source=='Server Method'",
+   "description": "e.g. neo_connect.handlers.commerce.stock_levels"
+  },
+  {
+   "fieldname": "base_filters",
+   "fieldtype": "Code",
+   "label": "Base Filters (JSON)",
+   "options": "JSON",
+   "depends_on": "eval:doc.outbound_source=='DocType Query'",
+   "description": "Always applied, e.g. [[\"disabled\",\"=\",0],[\"is_sales_item\",\"=\",1]]"
+  },
+  {
+   "fieldname": "allowed_filters",
+   "fieldtype": "Small Text",
+   "label": "Filters the Partner May Use",
+   "depends_on": "eval:doc.outbound_source=='DocType Query'",
+   "description": "ERPNext fieldnames, one per line (e.g. item_code, price_list)."
+  },
+  {
+   "fieldname": "cb_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "order_by",
+   "fieldtype": "Data",
+   "label": "Order By",
+   "default": "modified asc"
+  },
+  {
+   "fieldname": "default_page_length",
+   "fieldtype": "Int",
+   "label": "Default Page Size",
+   "default": "50"
+  },
+  {
+   "fieldname": "max_page_length",
+   "fieldtype": "Int",
+   "label": "Max Page Size",
+   "default": "500"
+  },
+  {
+   "fieldname": "sb_handler",
+   "fieldtype": "Section Break",
+   "label": "Handler Settings",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "handler_settings",
+   "fieldtype": "Code",
+   "label": "Handler Settings (JSON)",
+   "options": "JSON",
+   "description": "Settings read by hooks and server methods (overrides the partner's Handler Settings)."
+  },
+  {
+   "fieldname": "sb_mapping",
+   "fieldtype": "Section Break",
+   "label": "Field Mapping"
+  },
+  {
+   "fieldname": "field_maps",
+   "fieldtype": "Table",
+   "label": "Field Map",
+   "options": "API Field Map"
+  },
+  {
+   "fieldname": "sb_test",
+   "fieldtype": "Section Break",
+   "label": "Test",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "sample_payload",
+   "fieldtype": "Code",
+   "label": "Sample Payload (JSON)",
+   "options": "JSON",
+   "description": "Paste a real partner payload and click <b>Test Mapping</b>. Also shown in the Partner Guide."
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-09-24 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Neo Connect",
+ "name": "API Endpoint",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "field:slug",
+ "title_field": "endpoint_title",
+ "show_title_field_in_link": 1,
+ "track_changes": 1,
+ "naming_rule": "By fieldname"
+}

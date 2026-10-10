@@ -1,0 +1,242 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-07 14:30:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "partner",
+  "message_type",
+  "cb1",
+  "reference_doctype",
+  "document_action",
+  "payment_posting",
+  "endpoint_slug",
+  "cb2",
+  "status",
+  "auto_analyze",
+  "endpoint",
+  "sb_payloads",
+  "payloads",
+  "sb_fields",
+  "analysis_notes",
+  "spec_differences",
+  "fields",
+  "sb_confirm",
+  "confirmed_by",
+  "confirmed_on",
+  "cb_c",
+  "created_fields",
+  "sb_report",
+  "validation_report",
+  "analysis_json",
+  "payload_signature"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title",
+   "reqd": 1,
+   "in_list_view": 1,
+   "description": "e.g. Magento - Sales Order"
+  },
+  {
+   "fieldname": "partner",
+   "fieldtype": "Link",
+   "label": "Partner",
+   "options": "API Partner",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "message_type",
+   "fieldtype": "Data",
+   "label": "Message Type",
+   "default": "Sales Order",
+   "in_list_view": 1,
+   "description": "What the partner sends: Sales Order, Sales Invoice, Return, Customer ... (one Payload Sample per type)"
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "reference_doctype",
+   "fieldtype": "Link",
+   "label": "Create in ERPNext as",
+   "options": "DocType",
+   "reqd": 1,
+   "default": "Sales Order"
+  },
+  {
+   "fieldname": "document_action",
+   "fieldtype": "Select",
+   "label": "Document Action",
+   "options": "Save as Draft\nSubmit",
+   "default": "Save as Draft"
+  },
+  {
+   "fieldname": "payment_posting",
+   "fieldtype": "Select",
+   "label": "Record Payment As",
+   "options": "Invoice Payments Table\nPayment Entry\nDo Not Record",
+   "default": "Invoice Payments Table",
+   "depends_on": "eval:doc.reference_doctype=='Sales Invoice'",
+   "description": "Invoice Payments Table = Sales Invoice Payment rows (POS style). Unpaid orders stay unpaid."
+  },
+  {
+   "fieldname": "endpoint_slug",
+   "fieldtype": "Data",
+   "label": "Endpoint Code",
+   "description": "Optional; default is <partner>-<doctype>, e.g. magento-sales-order"
+  },
+  {
+   "fieldname": "cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nGap Ready\nAnalyzed\nConfirmed\nEndpoint Generated",
+   "default": "Draft",
+   "read_only": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "auto_analyze",
+   "fieldtype": "Check",
+   "label": "Prepare Gap Automatically",
+   "default": "1",
+   "description": "Analyse as soon as samples are added or changed (also when the partner sends one via the API)"
+  },
+  {
+   "fieldname": "endpoint",
+   "fieldtype": "Link",
+   "label": "Endpoint",
+   "options": "API Endpoint",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_payloads",
+   "fieldtype": "Section Break",
+   "label": "1. Sample JSON (one or more)"
+  },
+  {
+   "fieldname": "payloads",
+   "fieldtype": "Table",
+   "label": "Samples",
+   "options": "API Payload Sample Row",
+   "description": "Paste or upload real payloads from the partner. More samples = better detection of optional fields."
+  },
+  {
+   "fieldname": "sb_fields",
+   "fieldtype": "Section Break",
+   "label": "2. Detected Fields & Suggested Mapping"
+  },
+  {
+   "fieldname": "analysis_notes",
+   "fieldtype": "Small Text",
+   "label": "Analysis Notes",
+   "read_only": 1
+  },
+  {
+   "fieldname": "spec_differences",
+   "fieldtype": "Long Text",
+   "label": "Spec vs JSON Differences",
+   "read_only": 1
+  },
+  {
+   "fieldname": "fields",
+   "fieldtype": "Table",
+   "label": "Fields",
+   "options": "API Sample Field"
+  },
+  {
+   "fieldname": "sb_confirm",
+   "fieldtype": "Section Break",
+   "label": "Confirmation",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "confirmed_by",
+   "fieldtype": "Link",
+   "label": "Confirmed By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "confirmed_on",
+   "fieldtype": "Datetime",
+   "label": "Confirmed On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_c",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "created_fields",
+   "fieldtype": "Small Text",
+   "label": "Fields Created by This Sample",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_report",
+   "fieldtype": "Section Break",
+   "label": "3. Validation Report"
+  },
+  {
+   "fieldname": "validation_report",
+   "fieldtype": "Long Text",
+   "label": "Validation Report",
+   "read_only": 1
+  },
+  {
+   "fieldname": "analysis_json",
+   "fieldtype": "Code",
+   "label": "Analysis (internal)",
+   "options": "JSON",
+   "hidden": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "payload_signature",
+   "fieldtype": "Data",
+   "label": "Payload Signature",
+   "hidden": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-07 14:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "Neo Connect",
+ "name": "API Payload Sample",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "hash",
+ "title_field": "title",
+ "track_changes": 1
+}

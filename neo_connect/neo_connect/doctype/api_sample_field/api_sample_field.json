@@ -1,0 +1,275 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-07 14:30:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "include",
+  "gap_status",
+  "external_path",
+  "sample_value",
+  "target_doctype",
+  "erp_field",
+  "transform",
+  "create_field",
+  "cb1",
+  "role",
+  "data_type",
+  "source",
+  "spec_name",
+  "presence",
+  "confidence",
+  "required",
+  "note",
+  "reviewed",
+  "created_field",
+  "sb_new",
+  "proposed_fieldname",
+  "proposed_label",
+  "cb3",
+  "proposed_fieldtype",
+  "proposed_options",
+  "sb_adv",
+  "lookup_doctype",
+  "lookup_field",
+  "if_not_found",
+  "source_timezone",
+  "cb2",
+  "value_map",
+  "keep_as_sent",
+  "fallback_path",
+  "expression"
+ ],
+ "fields": [
+  {
+   "fieldname": "include",
+   "fieldtype": "Check",
+   "label": "Use",
+   "default": "1",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "gap_status",
+   "fieldtype": "Select",
+   "label": "Gap Status",
+   "options": "Existing Field\nCustomer Field\nOption Gap\nCreate Field\nHandled by NeoConnect\nCalculated / Not needed",
+   "in_list_view": 1,
+   "columns": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "external_path",
+   "fieldtype": "Data",
+   "label": "Partner JSON Path",
+   "in_list_view": 1,
+   "columns": 2,
+   "description": "e.g. vehicle.plate or items[].brand. Add rows yourself to define fields the samples don't show."
+  },
+  {
+   "fieldname": "sample_value",
+   "fieldtype": "Data",
+   "label": "Sample",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "target_doctype",
+   "fieldtype": "Link",
+   "label": "Target DocType",
+   "options": "DocType",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "erp_field",
+   "fieldtype": "Data",
+   "label": "ERPNext Field",
+   "in_list_view": 1,
+   "columns": 2,
+   "description": "Field on the target (items.<field> for lines). For 'Customer Field' rows: the Customer fieldname."
+  },
+  {
+   "fieldname": "transform",
+   "fieldtype": "Select",
+   "label": "Transform",
+   "options": "None\nStatic\nText\nUpper\nLower\nInteger\nFloat\nAbsolute\nCheck\nDate\nDatetime\nTime\nRemove Company Abbr\nValue Map\nLookup\nExpression",
+   "default": "None",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "create_field",
+   "fieldtype": "Check",
+   "label": "Create Field",
+   "in_list_view": 1,
+   "columns": 1,
+   "description": "Create the proposed field on the Target DocType (Generate / Create Ticked Fields)"
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "role",
+   "fieldtype": "Select",
+   "label": "Role",
+   "options": "Field\nExternal ID\nCustomer Field\nCustomer\nAddress\nShipping\nDiscount\nGrand Total\nPayment\nCost Center\nUnmapped\nIgnore"
+  },
+  {
+   "fieldname": "data_type",
+   "fieldtype": "Data",
+   "label": "Detected Type"
+  },
+  {
+   "fieldname": "source",
+   "fieldtype": "Data",
+   "label": "Source",
+   "read_only": 1
+  },
+  {
+   "fieldname": "spec_name",
+   "fieldtype": "Data",
+   "label": "Name in Spec",
+   "read_only": 1
+  },
+  {
+   "fieldname": "presence",
+   "fieldtype": "Data",
+   "label": "In Samples",
+   "read_only": 1
+  },
+  {
+   "fieldname": "confidence",
+   "fieldtype": "Int",
+   "label": "Match %",
+   "read_only": 1
+  },
+  {
+   "fieldname": "required",
+   "fieldtype": "Check",
+   "label": "Required"
+  },
+  {
+   "fieldname": "note",
+   "fieldtype": "Small Text",
+   "label": "Note",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reviewed",
+   "fieldtype": "Check",
+   "label": "Reviewed",
+   "read_only": 1,
+   "description": "Set when a user confirmed or edited this row; re-analysis keeps reviewed rows as they are"
+  },
+  {
+   "fieldname": "created_field",
+   "fieldtype": "Data",
+   "label": "Created Field",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_new",
+   "fieldtype": "Section Break",
+   "label": "Proposed New Field",
+   "depends_on": "eval:doc.gap_status=='Create Field' || doc.create_field"
+  },
+  {
+   "fieldname": "proposed_fieldname",
+   "fieldtype": "Data",
+   "label": "Fieldname"
+  },
+  {
+   "fieldname": "proposed_label",
+   "fieldtype": "Data",
+   "label": "Label"
+  },
+  {
+   "fieldname": "cb3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "proposed_fieldtype",
+   "fieldtype": "Select",
+   "label": "Field Type",
+   "options": "Data\nSmall Text\nLong Text\nInt\nFloat\nCurrency\nCheck\nDate\nDatetime\nTime\nSelect\nLink"
+  },
+  {
+   "fieldname": "proposed_options",
+   "fieldtype": "Small Text",
+   "label": "Options",
+   "description": "Select: one option per line; Link: DocType"
+  },
+  {
+   "fieldname": "sb_adv",
+   "fieldtype": "Section Break",
+   "label": "Lookup / Value Map / Expression",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "lookup_doctype",
+   "fieldtype": "Link",
+   "label": "Lookup DocType",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "lookup_field",
+   "fieldtype": "Data",
+   "label": "Lookup Field"
+  },
+  {
+   "fieldname": "if_not_found",
+   "fieldtype": "Select",
+   "label": "If Not Found",
+   "options": "Error\nUse Value\nSkip",
+   "default": "Error"
+  },
+  {
+   "fieldname": "source_timezone",
+   "fieldtype": "Data",
+   "label": "Source Time Zone"
+  },
+  {
+   "fieldname": "cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "value_map",
+   "fieldtype": "Code",
+   "label": "Value Map (JSON)",
+   "options": "JSON"
+  },
+  {
+   "fieldname": "keep_as_sent",
+   "fieldtype": "Check",
+   "label": "Keep Value As Sent",
+   "description": "Select field: store the partner's value as it is; new values are added to the options"
+  },
+  {
+   "fieldname": "fallback_path",
+   "fieldtype": "Data",
+   "label": "If Empty, Use Path",
+   "depends_on": "keep_as_sent",
+   "description": "e.g. fulfillment.method when there is no installer"
+  },
+  {
+   "fieldname": "expression",
+   "fieldtype": "Small Text",
+   "label": "Expression"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-07 14:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "Neo Connect",
+ "name": "API Sample Field",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1
+}

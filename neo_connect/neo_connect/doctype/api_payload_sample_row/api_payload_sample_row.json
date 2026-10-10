@@ -1,0 +1,83 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-07 14:30:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "label",
+  "attachment",
+  "source",
+  "record_count",
+  "received_on",
+  "payload",
+  "parse_note"
+ ],
+ "fields": [
+  {
+   "fieldname": "label",
+   "fieldtype": "Data",
+   "label": "Label",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "attachment",
+   "fieldtype": "Attach",
+   "label": "Upload JSON / Spec File",
+   "in_list_view": 1,
+   "columns": 3,
+   "description": ".json, or a document (.md/.txt) that contains ```json blocks"
+  },
+  {
+   "fieldname": "source",
+   "fieldtype": "Select",
+   "label": "Source",
+   "options": "Pasted\nUploaded\nPartner API",
+   "default": "Pasted",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "record_count",
+   "fieldtype": "Int",
+   "label": "Records",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "received_on",
+   "fieldtype": "Datetime",
+   "label": "Received On",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "payload",
+   "fieldtype": "Code",
+   "label": "JSON (paste here)",
+   "options": "JSON"
+  },
+  {
+   "fieldname": "parse_note",
+   "fieldtype": "Small Text",
+   "label": "Parse Notes",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-07 14:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "Neo Connect",
+ "name": "API Payload Sample Row",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1
+}

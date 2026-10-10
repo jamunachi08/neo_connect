@@ -1,0 +1,146 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-09-24 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "external_path",
+  "erp_field",
+  "transform",
+  "required",
+  "default_value",
+  "cb_1",
+  "lookup_doctype",
+  "lookup_field",
+  "lookup_endpoint",
+  "if_not_found",
+  "add_missing_option",
+  "value_map",
+  "source_timezone",
+  "expression",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "external_path",
+   "fieldtype": "Data",
+   "label": "Partner JSON Path",
+   "in_list_view": 1,
+   "columns": 3,
+   "description": "e.g. customer_email, billing_address.city, items[].sku"
+  },
+  {
+   "fieldname": "erp_field",
+   "fieldtype": "Data",
+   "label": "ERPNext Field",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 3,
+   "description": "e.g. customer, posting_date, items.item_code"
+  },
+  {
+   "fieldname": "transform",
+   "fieldtype": "Select",
+   "label": "Transform",
+   "options": "None\nStatic\nText\nUpper\nLower\nInteger\nFloat\nAbsolute\nCheck\nDate\nDatetime\nTime\nRemove Company Abbr\nValue Map\nLookup\nExpression",
+   "default": "None",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "required",
+   "fieldtype": "Check",
+   "label": "Required",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "default_value",
+   "fieldtype": "Data",
+   "label": "Default / Static Value",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "lookup_doctype",
+   "fieldtype": "Link",
+   "label": "Lookup DocType",
+   "options": "DocType",
+   "depends_on": "eval:doc.transform=='Lookup'"
+  },
+  {
+   "fieldname": "lookup_field",
+   "fieldtype": "Data",
+   "label": "Lookup Field",
+   "depends_on": "eval:doc.transform=='Lookup'",
+   "description": "Field in Lookup DocType that holds the partner value (default: name)"
+  },
+  {
+   "fieldname": "lookup_endpoint",
+   "fieldtype": "Link",
+   "label": "Lookup via Endpoint",
+   "options": "API Endpoint",
+   "depends_on": "eval:doc.transform=='Lookup'",
+   "description": "Resolve an external id previously imported through another endpoint"
+  },
+  {
+   "fieldname": "if_not_found",
+   "fieldtype": "Select",
+   "label": "If Not Found",
+   "options": "Error\nUse Value\nSkip",
+   "default": "Error",
+   "depends_on": "eval:doc.transform=='Lookup'"
+  },
+  {
+   "fieldname": "add_missing_option",
+   "fieldtype": "Check",
+   "label": "Keep Value As Sent (add to Select options)",
+   "description": "For Select fields: a value that is not an option yet is added to the field's options automatically, then stored as sent."
+  },
+  {
+   "fieldname": "value_map",
+   "fieldtype": "Code",
+   "label": "Value Map (JSON)",
+   "options": "JSON",
+   "depends_on": "eval:doc.transform=='Value Map'",
+   "description": "e.g. {\"pending\": \"Draft\", \"complete\": \"Paid\", \"*\": \"Other\"}"
+  },
+  {
+   "fieldname": "source_timezone",
+   "fieldtype": "Data",
+   "label": "Source Time Zone",
+   "depends_on": "eval:['Date','Datetime','Time'].includes(doc.transform)",
+   "description": "For dates without an offset, e.g. UTC (Magento). Converted to the system time zone."
+  },
+  {
+   "fieldname": "expression",
+   "fieldtype": "Small Text",
+   "label": "Expression",
+   "depends_on": "eval:doc.transform=='Expression'",
+   "description": "Python expression (safe_eval). Names: value, record, row, flt, cint, etc."
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Data",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-07 14:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "Neo Connect",
+ "name": "API Field Map",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1,
+ "editable_grid": 1
+}

@@ -1,0 +1,694 @@
+{
+  "pack": "Magento (PowerTire) - Sales Invoice",
+  "version": 1,
+  "platform": "Magento",
+  "description": "Magento order JSON (Klever Tech spec 2026-09-15) -> Sales Invoice for PowerTire. Customer found/created by e-mail; vehicle + mobile written to the Customer; branch (installer) and sales rep kept as Magento sends them; payment recorded in the invoice Payments table (Tap / Tamara / Tabby / Cash). Invoices are saved as DRAFT until you switch Document Action to Submit at go-live.",
+  "custom_fields": [
+    {
+      "fieldname": "custom_طريقة_الدفع",
+      "label": "طريقة الدفع",
+      "fieldtype": "Select",
+      "options": "\nنقدي\nتحويل بنكي\nتمارا\nتاب\nتابي",
+      "insert_after": "custom_البيان",
+      "allow_on_submit": 0,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Sales Invoice"
+    },
+    {
+      "fieldname": "custom_fitting_location__موقع_التركيب",
+      "label": "Fitting location - موقع التركيب",
+      "fieldtype": "Select",
+      "options": "\nالمغسلة\nفرع جودير\nفرع قوة الاطار\nفرع الريان\nفرع جدة\nتركيب  خارجي\n\nPowerTire Riyadh North\nHome Delivery\nPowerTire Jeddah",
+      "insert_after": "custom_car_details__صفات_السيارة",
+      "allow_on_submit": 1,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Sales Invoice"
+    },
+    {
+      "fieldname": "custom_اسم_مندوب_المبيعات",
+      "label": "اسم مندوب المبيعات",
+      "fieldtype": "Select",
+      "options": "\nالمغسلة\nعبدالغفار\nميساء\nميرنا\nخلود\nمحمد العطار\nسالم المحسني\nمحمد المطري\nخديجة\nرؤى\nطلب خارجي\nEXC-001\nEXC-007",
+      "insert_after": "custom_warranty__الضمان",
+      "allow_on_submit": 1,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Sales Invoice"
+    },
+    {
+      "fieldname": "custom_fulfillment_method",
+      "label": "Fulfillment Method",
+      "fieldtype": "Data",
+      "options": null,
+      "insert_after": "custom_neo_connect_section",
+      "allow_on_submit": 1,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Sales Invoice"
+    },
+    {
+      "fieldname": "custom_fulfillment_pickup_date",
+      "label": "Fulfillment Pickup Date",
+      "fieldtype": "Date",
+      "options": null,
+      "insert_after": "custom_neo_connect_section",
+      "allow_on_submit": 1,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Sales Invoice"
+    },
+    {
+      "fieldname": "custom_fulfillment_pickup_time",
+      "label": "Fulfillment Pickup Time",
+      "fieldtype": "Data",
+      "options": null,
+      "insert_after": "custom_neo_connect_section",
+      "allow_on_submit": 1,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Sales Invoice"
+    },
+    {
+      "fieldname": "custom_brand",
+      "label": "Brand",
+      "fieldtype": "Data",
+      "options": null,
+      "insert_after": "item_name",
+      "allow_on_submit": 1,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Sales Invoice Item"
+    },
+    {
+      "fieldname": "custom_width",
+      "label": "Width",
+      "fieldtype": "Data",
+      "options": null,
+      "insert_after": "item_name",
+      "allow_on_submit": 1,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Sales Invoice Item"
+    },
+    {
+      "fieldname": "custom_height",
+      "label": "Height",
+      "fieldtype": "Data",
+      "options": null,
+      "insert_after": "item_name",
+      "allow_on_submit": 1,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Sales Invoice Item"
+    },
+    {
+      "fieldname": "custom_rim",
+      "label": "Rim",
+      "fieldtype": "Data",
+      "options": null,
+      "insert_after": "item_name",
+      "allow_on_submit": 1,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Sales Invoice Item"
+    },
+    {
+      "fieldname": "custom_speed_index",
+      "label": "Speed Index",
+      "fieldtype": "Data",
+      "options": null,
+      "insert_after": "item_name",
+      "allow_on_submit": 1,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Sales Invoice Item"
+    },
+    {
+      "fieldname": "custom_fulfillment_delivery_date",
+      "label": "Fulfillment Delivery Date",
+      "fieldtype": "Date",
+      "options": null,
+      "insert_after": "custom_neo_connect_section",
+      "allow_on_submit": 1,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Sales Invoice"
+    },
+    {
+      "fieldname": "custom_fulfillment_delivery_comment",
+      "label": "Fulfillment Delivery Comment",
+      "fieldtype": "Small Text",
+      "options": null,
+      "insert_after": "custom_neo_connect_section",
+      "allow_on_submit": 1,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Sales Invoice"
+    },
+    {
+      "fieldname": "custom_car_details__صفات_السيارة",
+      "label": "Car Details - صفات السيارة",
+      "fieldtype": "Data",
+      "options": null,
+      "insert_after": "customer_name",
+      "allow_on_submit": 0,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Customer"
+    },
+    {
+      "fieldname": "custom_year__سنة_الصنع",
+      "label": "Year - سنة الصنع",
+      "fieldtype": "Data",
+      "options": null,
+      "insert_after": "customer_name",
+      "allow_on_submit": 0,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Customer"
+    },
+    {
+      "fieldname": "custom_model__موديل_السيارة",
+      "label": "Model - موديل السيارة",
+      "fieldtype": "Data",
+      "options": null,
+      "insert_after": "customer_name",
+      "allow_on_submit": 0,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Customer"
+    },
+    {
+      "fieldname": "custom_plate_number__رقم_اللوحة",
+      "label": "Plate Number - رقم اللوحة",
+      "fieldtype": "Data",
+      "options": null,
+      "insert_after": "customer_name",
+      "allow_on_submit": 0,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Customer"
+    },
+    {
+      "fieldname": "custom_mobile_no__رقم_الجوال_",
+      "label": "Mobile No - رقم الجوال",
+      "fieldtype": "Data",
+      "options": null,
+      "insert_after": "customer_name",
+      "allow_on_submit": 0,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Customer"
+    },
+    {
+      "fieldname": "custom_vehicle_vin_number",
+      "label": "Vehicle VIN Number",
+      "fieldtype": "Data",
+      "options": null,
+      "insert_after": "custom_neo_connect_section",
+      "allow_on_submit": 1,
+      "read_only": 0,
+      "fetch_from": null,
+      "dt": "Customer"
+    }
+  ],
+  "select_options": [
+    {
+      "dt": "Sales Invoice",
+      "fieldname": "custom_طريقة_الدفع",
+      "options": [
+        "تاب",
+        "تابي",
+        "تمارا",
+        "نقدي"
+      ]
+    }
+  ],
+  "modes_of_payment": [
+    {
+      "name": "Tap",
+      "type": "Bank"
+    },
+    {
+      "name": "Tamara",
+      "type": "Bank"
+    },
+    {
+      "name": "Tabby",
+      "type": "Bank"
+    },
+    {
+      "name": "Cash",
+      "type": "Cash"
+    }
+  ],
+  "endpoint": {
+    "endpoint_title": "Magento (PowerTire) - Sales Invoice",
+    "slug": "magento-sales-invoice",
+    "direction": "Inbound",
+    "reference_doctype": "Sales Invoice",
+    "description": "Magento order JSON (Klever Tech spec 2026-09-15) -> Sales Invoice for PowerTire. Customer found/created by e-mail; vehicle + mobile written to the Customer; branch (installer) and sales rep kept as Magento sends them; payment recorded in the invoice Payments table (Tap / Tamara / Tabby / Cash). Invoices are saved as DRAFT until you switch Document Action to Submit at go-live.",
+    "records_path": null,
+    "external_id_path": "order_number",
+    "on_duplicate": "Skip",
+    "max_records_per_request": 50,
+    "document_action": "Save as Draft",
+    "process_async": 0,
+    "ignore_permissions": 0,
+    "row_filters": null,
+    "pre_process_hook": "neo_connect.handlers.commerce.ensure_customer\nneo_connect.handlers.commerce.apply_charges\nneo_connect.handlers.commerce.add_invoice_payments",
+    "post_process_hook": "neo_connect.handlers.commerce.check_grand_total",
+    "outbound_source": "DocType Query",
+    "server_method": null,
+    "base_filters": null,
+    "allowed_filters": null,
+    "order_by": "modified asc",
+    "default_page_length": 50,
+    "max_page_length": 500,
+    "defaults": {
+      "taxes_and_charges": "{{company.default_sales_tax_template}}",
+      "set_posting_time": 1,
+      "disable_rounded_total": 1,
+      "update_stock": 0,
+      "items.warehouse": "{{company.default_warehouse}}",
+      "cost_center": "{{company.cost_center}}"
+    },
+    "handler_settings": {
+      "customer_email_path": "customer.email",
+      "customer_name_paths": [
+        "customer.firstname"
+      ],
+      "customer_phone_path": "billing_address.telephone",
+      "billing_address_path": "billing_address",
+      "address_map": {
+        "line1": "street",
+        "city": "city",
+        "state": "region",
+        "pincode": "postcode",
+        "country_code": "country_id"
+      },
+      "items_path": "items",
+      "shipping_amount_path": "totals.shipping_amount",
+      "discount_amount_path": "totals.discount_amount",
+      "discount_on": "Net Total",
+      "grand_total_path": "totals.grand_total",
+      "payment_method_path": "payment.method",
+      "paid_amount_path": "payment.amount_paid",
+      "payment_reference_path": "payment.transaction_id",
+      "update_customer_fields": 1,
+      "mode_of_payment_map": {
+        "tap": "Tap",
+        "tamara": "Tamara",
+        "tabby": "Tabby",
+        "cashondelivery": "Cash"
+      },
+      "customer_fields": {
+        "custom_car_details__صفات_السيارة": "vehicle.make",
+        "custom_year__سنة_الصنع": "vehicle.year",
+        "custom_model__موديل_السيارة": "vehicle.model",
+        "custom_plate_number__رقم_اللوحة": "vehicle.plate",
+        "custom_mobile_no__رقم_الجوال_": "billing_address.telephone",
+        "custom_vehicle_vin_number": "vehicle.vin_number"
+      }
+    },
+    "field_maps": [
+      {
+        "external_path": "order_number",
+        "erp_field": "po_no",
+        "transform": "Text",
+        "required": 1,
+        "if_not_found": "Error",
+        "notes": "Unique order id: duplicates are detected with it"
+      },
+      {
+        "external_path": "order_date",
+        "erp_field": "posting_date",
+        "transform": "Date",
+        "required": 1,
+        "if_not_found": "Error",
+        "notes": "Order date"
+      },
+      {
+        "external_path": "order_date",
+        "erp_field": "posting_time",
+        "transform": "Time",
+        "if_not_found": "Error"
+      },
+      {
+        "external_path": "order_date",
+        "erp_field": "po_date",
+        "transform": "Date",
+        "if_not_found": "Error"
+      },
+      {
+        "external_path": "totals.order_currency_code",
+        "erp_field": "currency",
+        "transform": "Upper",
+        "if_not_found": "Error"
+      },
+      {
+        "external_path": "items[].sku",
+        "erp_field": "items.item_code",
+        "transform": "Lookup",
+        "required": 1,
+        "lookup_doctype": "Item",
+        "lookup_field": "item_code",
+        "if_not_found": "Error",
+        "notes": "Must equal the ERPNext Item Code"
+      },
+      {
+        "external_path": "items[].qty_ordered",
+        "erp_field": "items.qty",
+        "transform": "Float",
+        "required": 1,
+        "if_not_found": "Error"
+      },
+      {
+        "external_path": "items[].price",
+        "erp_field": "items.rate",
+        "transform": "Float",
+        "required": 1,
+        "if_not_found": "Error",
+        "notes": "Unit price excluding VAT"
+      },
+      {
+        "external_path": "payment.method",
+        "erp_field": "custom_طريقة_الدفع",
+        "transform": "Value Map",
+        "if_not_found": "Error",
+        "value_map": {
+          "tap": "تاب",
+          "tamara": "تمارا",
+          "cashondelivery": "نقدي",
+          "tabby": "تابي",
+          "*": "نقدي"
+        },
+        "notes": "Matches طريقة الدفع - no option for: tabby"
+      },
+      {
+        "external_path": "installer.name",
+        "erp_field": "custom_fitting_location__موقع_التركيب",
+        "transform": "Expression",
+        "if_not_found": "Error",
+        "add_missing_option": 1,
+        "expression": "first_of(record, 'installer.name', 'fulfillment.method')",
+        "notes": "Kept as sent; if empty: fulfillment.method"
+      },
+      {
+        "external_path": "erp_executive_code",
+        "erp_field": "custom_اسم_مندوب_المبيعات",
+        "transform": "None",
+        "if_not_found": "Error",
+        "add_missing_option": 1,
+        "notes": "Kept as sent"
+      },
+      {
+        "external_path": "customer.email",
+        "erp_field": "contact_email",
+        "transform": "Lower",
+        "if_not_found": "Error",
+        "notes": "Customer is found by e-mail or created"
+      },
+      {
+        "external_path": "fulfillment.method",
+        "erp_field": "custom_fulfillment_method",
+        "transform": "Text",
+        "if_not_found": "Error",
+        "notes": "Created Data field custom_fulfillment_method on Sales Invoice"
+      },
+      {
+        "external_path": "fulfillment.pickup_date",
+        "erp_field": "custom_fulfillment_pickup_date",
+        "transform": "Date",
+        "if_not_found": "Error",
+        "notes": "Created Date field custom_fulfillment_pickup_date on Sales Invoice"
+      },
+      {
+        "external_path": "fulfillment.pickup_time",
+        "erp_field": "custom_fulfillment_pickup_time",
+        "transform": "Text",
+        "if_not_found": "Error",
+        "notes": "Created Data field custom_fulfillment_pickup_time on Sales Invoice"
+      },
+      {
+        "external_path": "items[].brand",
+        "erp_field": "items.custom_brand",
+        "transform": "Text",
+        "if_not_found": "Error",
+        "notes": "Created Data field custom_brand on Sales Invoice Item"
+      },
+      {
+        "external_path": "items[].width",
+        "erp_field": "items.custom_width",
+        "transform": "Text",
+        "if_not_found": "Error",
+        "notes": "Created Data field custom_width on Sales Invoice Item"
+      },
+      {
+        "external_path": "items[].height",
+        "erp_field": "items.custom_height",
+        "transform": "Text",
+        "if_not_found": "Error",
+        "notes": "Created Data field custom_height on Sales Invoice Item"
+      },
+      {
+        "external_path": "items[].rim",
+        "erp_field": "items.custom_rim",
+        "transform": "Text",
+        "if_not_found": "Error",
+        "notes": "Created Data field custom_rim on Sales Invoice Item"
+      },
+      {
+        "external_path": "items[].speed_index",
+        "erp_field": "items.custom_speed_index",
+        "transform": "Text",
+        "if_not_found": "Error",
+        "notes": "Created Data field custom_speed_index on Sales Invoice Item"
+      },
+      {
+        "external_path": "fulfillment.delivery_date",
+        "erp_field": "custom_fulfillment_delivery_date",
+        "transform": "Date",
+        "if_not_found": "Error",
+        "notes": "Created Date field custom_fulfillment_delivery_date on Sales Invoice"
+      },
+      {
+        "external_path": "fulfillment.delivery_comment",
+        "erp_field": "custom_fulfillment_delivery_comment",
+        "transform": "Text",
+        "if_not_found": "Error",
+        "notes": "Created Small Text field custom_fulfillment_delivery_comment on Sales Invoice"
+      }
+    ]
+  },
+  "sample_payloads": [
+    {
+      "order_number": "PT-289335",
+      "order_date": "2026-09-15T10:30:00Z",
+      "status": "processing",
+      "custom_order_status": "Awaiting Installer",
+      "erp_executive_code": "EXC-001",
+      "customer": {
+        "email": "ahmed@example.com",
+        "firstname": "Ahmed Al-Rashidi",
+        "is_guest": false
+      },
+      "billing_address": {
+        "firstname": "Ahmed Al-Rashidi",
+        "street": "King Fahad Road, Building 5",
+        "city": "Riyadh",
+        "postcode": "12271",
+        "country_id": "SA",
+        "telephone": "+966501234567"
+      },
+      "vehicle": {
+        "make": "Toyota",
+        "model": "Camry",
+        "year": "2022",
+        "plate": "ABC 1234",
+        "vin_number": "1HGBH41JXMN109186"
+      },
+      "fulfillment": {
+        "method": "Store Pickup",
+        "pickup_date": "2026-09-20T00:00:00Z",
+        "pickup_time": "10:00 AM - 12:00 PM"
+      },
+      "installer": {
+        "name": "PowerTire Riyadh North",
+        "name_ar": "باور تاير شمال الرياض",
+        "address": "King Fahad Road, Building 5",
+        "address_ar": "طريق الملك فهد، مبنى 5",
+        "city": "Riyadh",
+        "city_ar": "الرياض",
+        "country": "SA",
+        "phone": "+966114567890",
+        "email": "riyadhnorth@powertire.sa",
+        "latitude": "24.7136",
+        "longitude": "46.6753",
+        "installer_type": "branch",
+        "is_mobilevan": false
+      },
+      "items": [
+        {
+          "sku": "TYR-MICH-2254517-XL",
+          "name": "Michelin Pilot Sport 4 225/45R17 XL",
+          "brand": "Michelin",
+          "width": "225",
+          "height": "45",
+          "rim": "17",
+          "speed_index": "W",
+          "qty_ordered": 4,
+          "price": 450.0,
+          "price_incl_tax": 517.5,
+          "row_total": 1800.0,
+          "row_total_incl_tax": 2070.0,
+          "tax_amount": 270.0,
+          "supplier_item_code": "MC-PS4-225"
+        }
+      ],
+      "totals": {
+        "subtotal": 1800.0,
+        "subtotal_incl_tax": 2070.0,
+        "shipping_amount": 0.0,
+        "tax_amount": 270.0,
+        "grand_total": 2070.0
+      },
+      "payment": {
+        "method": "tap",
+        "method_title": "TAP Payment",
+        "amount_paid": 2070.0,
+        "transaction_id": "ch_3abc123xyz"
+      }
+    },
+    {
+      "order_number": "PT-289400",
+      "order_date": "2026-10-04T18:45:00Z",
+      "status": "pending",
+      "custom_order_status": "Ready to Ship",
+      "store_name": "PowerTire SA Arabic",
+      "erp_executive_code": "EXC-001",
+      "customer": {
+        "email": "sara@example.com",
+        "firstname": "Sara Al-Qahtani",
+        "is_guest": true
+      },
+      "billing_address": {
+        "firstname": "Sara Al-Qahtani",
+        "street": "Prince Sultan St 12",
+        "city": "Jeddah",
+        "region": "Makkah Region",
+        "postcode": "23511",
+        "country_id": "SA",
+        "telephone": "+966555555555"
+      },
+      "vehicle": {
+        "make": "Hyundai",
+        "model": "Elantra",
+        "year": "2021",
+        "plate": "XYZ 9876",
+        "vin_number": "KMHD841CBMU123456"
+      },
+      "fulfillment": {
+        "method": "Home Delivery",
+        "delivery_date": "2026-10-07T00:00:00Z",
+        "delivery_comment": "Please call before arriving"
+      },
+      "items": [
+        {
+          "sku": "TYR-MICH-2254517-XL",
+          "name": "Michelin Pilot Sport 4 225/45R17 XL",
+          "brand": "Michelin",
+          "width": "225",
+          "height": "45",
+          "rim": "17",
+          "speed_index": "W",
+          "qty_ordered": 2,
+          "price": 450.0,
+          "price_incl_tax": 517.5,
+          "row_total": 900.0,
+          "row_total_incl_tax": 1035.0,
+          "tax_amount": 135.0,
+          "supplier_item_code": "MC-PS4-225"
+        }
+      ],
+      "totals": {
+        "subtotal": 900.0,
+        "subtotal_incl_tax": 1035.0,
+        "shipping_amount": 0.0,
+        "tax_amount": 135.0,
+        "grand_total": 1035.0
+      },
+      "payment": {
+        "method": "cashondelivery",
+        "method_title": "Cash on Delivery",
+        "amount_paid": 0,
+        "transaction_id": ""
+      }
+    },
+    {
+      "order_number": "PT-289501",
+      "order_date": "2026-09-15T10:30:00Z",
+      "status": "processing",
+      "custom_order_status": "Awaiting Installer",
+      "erp_executive_code": "EXC-002",
+      "customer": {
+        "email": "ahmed@example.com",
+        "firstname": "Ahmed Al-Rashidi",
+        "is_guest": false
+      },
+      "billing_address": {
+        "firstname": "Ahmed Al-Rashidi",
+        "street": "King Fahad Road, Building 5",
+        "city": "Riyadh",
+        "postcode": "12271",
+        "country_id": "SA",
+        "telephone": "+966501234567"
+      },
+      "vehicle": {
+        "make": "Toyota",
+        "model": "Camry",
+        "year": "2022",
+        "plate": "ABC 1234",
+        "vin_number": "1HGBH41JXMN109186"
+      },
+      "fulfillment": {
+        "method": "Mobile VAN Service",
+        "pickup_date": "2026-10-12T00:00:00Z",
+        "pickup_time": "04:00 PM - 06:00 PM"
+      },
+      "items": [
+        {
+          "sku": "TYR-MICH-2254517-XL",
+          "name": "Michelin Pilot Sport 4 225/45R17 XL",
+          "brand": "Michelin",
+          "width": "225",
+          "height": "45",
+          "rim": "17",
+          "speed_index": "W",
+          "qty_ordered": 4,
+          "price": 450.0,
+          "price_incl_tax": 517.5,
+          "row_total": 1800.0,
+          "row_total_incl_tax": 2070.0,
+          "tax_amount": 270.0,
+          "supplier_item_code": "MC-PS4-225"
+        }
+      ],
+      "totals": {
+        "subtotal": 1800.0,
+        "subtotal_incl_tax": 2070.0,
+        "shipping_amount": 0.0,
+        "tax_amount": 270.0,
+        "grand_total": 2070.0
+      },
+      "payment": {
+        "method": "tabby",
+        "method_title": "Tabby",
+        "amount_paid": 2070.0,
+        "transaction_id": "tb_7f3a91"
+      }
+    }
+  ]
+}

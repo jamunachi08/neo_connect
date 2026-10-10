@@ -1,0 +1,83 @@
+{
+  "_platform": "Any",
+  "endpoint_title": "Items Catalog",
+  "slug": "items",
+  "direction": "Outbound",
+  "enabled": 1,
+  "reference_doctype": "Item",
+  "description": "Sellable, enabled items with barcodes.",
+  "outbound_source": "DocType Query",
+  "base_filters": [
+    [
+      "disabled",
+      "=",
+      0
+    ],
+    [
+      "is_sales_item",
+      "=",
+      1
+    ]
+  ],
+  "allowed_filters": "item_code\nitem_group\nbrand",
+  "order_by": "modified asc",
+  "default_page_length": 100,
+  "max_page_length": 500,
+  "field_maps": [
+    {
+      "external_path": "sku",
+      "erp_field": "item_code",
+      "transform": "None"
+    },
+    {
+      "external_path": "name",
+      "erp_field": "item_name",
+      "transform": "None"
+    },
+    {
+      "external_path": "description",
+      "erp_field": "description",
+      "transform": "None"
+    },
+    {
+      "external_path": "category",
+      "erp_field": "item_group",
+      "transform": "None"
+    },
+    {
+      "external_path": "brand",
+      "erp_field": "brand",
+      "transform": "None"
+    },
+    {
+      "external_path": "uom",
+      "erp_field": "stock_uom",
+      "transform": "None"
+    },
+    {
+      "external_path": "is_stock_item",
+      "erp_field": "is_stock_item",
+      "transform": "Check"
+    },
+    {
+      "external_path": "weight",
+      "erp_field": "weight_per_unit",
+      "transform": "Float"
+    },
+    {
+      "external_path": "barcodes[].barcode",
+      "erp_field": "barcodes.barcode",
+      "transform": "None"
+    },
+    {
+      "external_path": "barcodes[].type",
+      "erp_field": "barcodes.barcode_type",
+      "transform": "None"
+    },
+    {
+      "external_path": "updated_at",
+      "erp_field": "modified",
+      "transform": "Datetime"
+    }
+  ]
+}
